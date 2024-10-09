@@ -1,85 +1,80 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Markdown Note-Taking App
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A simple and intuitive Markdown note-taking application built with NestJS. This app allows users to upload Markdown files, check grammar and spelling, and parse Markdown to HTML.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
+- [Credits](#credits)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features
 
-## Project setup
+- Upload Markdown files
+- Check grammar and spelling in Markdown notes
+- Parse Markdown into HTML for previewing
+- User-friendly interface
 
-```bash
-$ npm install
-```
+## Installation
 
-## Compile and run the project
+To get started with this project, follow these steps:
 
-```bash
-# development
-$ npm run start
+1. Clone the repository:
 
-# watch mode
-$ npm run start:dev
+   ```bash
+   git clone https://github.com/yourusername/markdown-note-taking-app.git
+   cd markdown-note-taking-app
+   ```
 
-# production mode
-$ npm run start:prod
-```
+2. Install dependencies:
 
-## Run tests
+   ```bash
+   npm install
+   ```
 
-```bash
-# unit tests
-$ npm run test
+3. Run the application:
 
-# e2e tests
-$ npm run test:e2e
+   ```bash
+   npm run start
+   ```
 
-# test coverage
-$ npm run test:cov
-```
+   The application will start on `http://localhost:3000`.
 
-## Resources
+## Usage
 
-Check out a few resources that may come in handy when working with NestJS:
+- Upload a Markdown file by sending a POST request to `/upload`.
+- Check the grammar of a Markdown file by sending a POST request to `/check-grammar/:fileName`.
+- Parse the uploaded Markdown file into HTML format.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## API Endpoints
 
-## Support
+| Method | Endpoint                    | Description                          |
+| ------ | --------------------------- | ------------------------------------ |
+| POST   | `/upload`                   | Upload a Markdown file               |
+| POST   | `/check-grammar/:fileName`  | Check grammar for the specified file |
+| POST   | `/parse-markdown/:fileName` | Parse to HTML                        |
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Technologies Used
 
-## Stay in touch
+- [NestJS](https://nestjs.com/) - A progressive Node.js framework for building efficient and scalable server-side applications.
+- [TypeScript](https://www.typescriptlang.org/) - A superset of JavaScript that compiles to plain JavaScript.
+- [marked](https://github.com/markedjs/marked) - A low-level Markdown compiler for parsing Markdown without caching or blocking for long periods.
+- [Typo.js](https://github.com/cfinke/Typo.js) - A JavaScript spell checker that uses Hunspell dictionaries.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Contributing
 
-## License
+Contributions are welcome! Please follow these steps:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/YourFeature`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
+4. Push to the branch (`git push origin feature/YourFeature`)
+5. Open a pull request
+
+## Credits
+
+This project idea was inspired by the [Markdown Note Taking App](https://roadmap.sh/projects/markdown-note-taking-app) roadmap.

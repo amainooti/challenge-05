@@ -14,11 +14,15 @@ import { FileUploadService } from './file-upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
 import * as fs from 'fs/promises';
+import { MarkdownParserService } from '../markdown/markdown.service';
 
 @Controller('file-upload')
 export class FileUploadController {
   private readonly logger = new Logger(FileUploadController.name);
-  constructor(private readonly fileUploadService: FileUploadService) {}
+  constructor(
+    private readonly fileUploadService: FileUploadService,
+    private readonly markdownParserService: MarkdownParserService,
+  ) {}
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
@@ -52,6 +56,29 @@ export class FileUploadController {
       return this.fileUploadService.checkGrammar(filePath);
     } catch (error) {
       throw new BadRequestException('Error searching for file');
+    }
+  }
+  @Get('parse-markdown/:fileName')
+  async parseMarkdown(@Param('fileName') fileName: string) {
+    const uploadsDir = path.join(process.cwd(), 'uploads');
+
+    try {
+      const files = await fs.readdir(uploadsDir);
+      const regex = new RegExp(`${fileName}`, 'i');
+      const matchingFile = files.find((file) => regex.test(file));
+
+      if (!matchingFile) {
+        throw new BadRequestException('File not found');
+      }
+
+      const filePath = path.join(uploadsDir, matchingFile);
+      const markdownText = await fs.readFile(filePath, 'utf-8');
+
+      // Use the Markdown parser service to parse the text
+      const parsedHtml = this.markdownParserService.parseMarkdown(markdownText);
+      return { message: 'Markdown parsed successfully', html: parsedHtml };
+    } catch (error) {
+      throw new BadRequestException('Error parsing markdown');
     }
   }
 }

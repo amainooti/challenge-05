@@ -4,6 +4,7 @@ import { FileUploadController } from './file-upload.controller';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { Request } from 'express';
+import { MarkdownParserService } from '../markdown/markdown.service';
 
 @Module({
   imports: [
@@ -18,6 +19,6 @@ import { Request } from 'express';
     }),
   ],
   controllers: [FileUploadController],
-  providers: [FileUploadService],
+  providers: [FileUploadService, MarkdownParserService],
 })
 export class FileUploadModule {}
