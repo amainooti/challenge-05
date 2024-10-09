@@ -58,6 +58,10 @@ To get started with this project, follow these steps:
 | GET    | `/check-grammar/:fileName`  | Check grammar for the specified file |
 | GET    | `/parse-markdown/:fileName` | Parse to HTML                        |
 
+## demo
+
+![demo](display_markdown.png)
+
 ## Technologies Used
 
 - [NestJS](https://nestjs.com/) - A progressive Node.js framework for building efficient and scalable server-side applications.
