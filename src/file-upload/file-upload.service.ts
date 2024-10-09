@@ -1,22 +1,22 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { CreateFileUploadDto } from './dto/create-file-upload.dto';
-import { UpdateFileUploadDto } from './dto/update-file-upload.dto';
+import * as fs from 'fs/promises';
+import Typo = require('typo-js');
 
 @Injectable()
 export class FileUploadService {
   private readonly logger = new Logger(FileUploadService.name);
-
   constructor() {}
   uploadFile(file: Express.Multer.File) {
-    console.log('file: ', this.logger.debug(file));
+    this.logger.debug(file);
     if (!file) {
       throw new BadRequestException('no file uploaded');
     }
 
     // validate file type
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+    const allowedMimeTypes = 'text/markdown';
+
     if (!allowedMimeTypes.includes(file.mimetype)) {
-      throw new BadRequestException('invalid file type');
+      throw new BadRequestException('File does not match supported format.');
     }
 
     // validate file size (e.g., max 5mb)
@@ -28,19 +28,28 @@ export class FileUploadService {
     return { message: 'File uploaded successfully', filePath: file.path };
   }
 
-  findAll() {
-    return `This action returns all fileUpload`;
-  }
+  async checkGrammar(filePath: string) {
+    try {
+      let dictionary = new Typo('en_US');
 
-  findOne(id: number) {
-    return `This action returns a #${id} fileUpload`;
-  }
+      // Read the markdown file content
+      const markdownText = await fs.readFile(filePath, 'utf-8');
 
-  update(id: number, updateFileUploadDto: UpdateFileUploadDto) {
-    return `This action updates a #${id} fileUpload`;
-  }
+      // Example of checking if a sentence or words are spelled correctly
+      const words = markdownText.split(/\s+/); // Split text into words
+      const misspelledWords = words.filter((word) => !dictionary.check(word));
 
-  remove(id: number) {
-    return `This action removes a #${id} fileUpload`;
+      // Log misspelled words for debugging
+      this.logger.debug('Misspelled words:', misspelledWords);
+
+      if (misspelledWords.length === 0) {
+        return { message: 'No spelling errors found' };
+      }
+
+      return { message: 'Spelling errors found', errors: misspelledWords };
+    } catch (error) {
+      this.logger.error('Error checking grammar', error);
+      throw new BadRequestException('Error checking grammar');
+    }
   }
 }
