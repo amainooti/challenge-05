@@ -55,8 +55,8 @@ To get started with this project, follow these steps:
 | Method | Endpoint                    | Description                          |
 | ------ | --------------------------- | ------------------------------------ |
 | POST   | `/upload`                   | Upload a Markdown file               |
-| POST   | `/check-grammar/:fileName`  | Check grammar for the specified file |
-| POST   | `/parse-markdown/:fileName` | Parse to HTML                        |
+| GET    | `/check-grammar/:fileName`  | Check grammar for the specified file |
+| GET    | `/parse-markdown/:fileName` | Parse to HTML                        |
 
 ## Technologies Used
 
