@@ -47,8 +47,8 @@ To get started with this project, follow these steps:
 ## Usage
 
 - Upload a Markdown file by sending a POST request to `/upload`.
-- Check the grammar of a Markdown file by sending a POST request to `/check-grammar/:fileName`.
-- Parse the uploaded Markdown file into HTML format.
+- Check the grammar of a Markdown file by sending a GET request to `/check-grammar/:fileName`.
+- Parse the uploaded Markdown file into HTML format `/parse-markdown/:fileName`.
 
 ## API Endpoints
 
