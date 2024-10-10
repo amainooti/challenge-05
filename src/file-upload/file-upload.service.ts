@@ -55,20 +55,20 @@ export class FileUploadService {
     }
   }
 
-  parseMarkdown(markdownText: string, matchingFile: string) {
+  async parseMarkdown(markdownText: string, matchingFile: string) {
     this.logger.debug('Parsing markdown text');
 
     this.logger.debug(markdownText);
     // Convert Markdown to HTML
-    const html = marked(markdownText);
-
+    const html = await marked(markdownText);
     this.logger.debug('Parsed HTML:', html);
     const outputDir = path.join(process.cwd(), 'output');
     const outputPath = path.join(outputDir, `${matchingFile}.html`);
 
     try {
       fs.mkdir(outputDir, { recursive: true });
-      fs.writeFile(outputPath, html as string, 'utf-8');
+      fs.writeFile(outputPath, html, 'utf-8');
+
       this.logger.debug(`HTML saved to ${outputPath}`);
       return html;
     } catch (error) {
