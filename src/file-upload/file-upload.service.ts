@@ -55,20 +55,33 @@ export class FileUploadService {
     }
   }
 
+<<<<<<< HEAD
   async parseMarkdown(markdownText: string, matchingFile: string) {
+=======
+  parseMarkdown(markdownText: string, matchingFile: string) {
+>>>>>>> bd4cba0ccafd0739654a322b4322a18859191b60
     this.logger.debug('Parsing markdown text');
 
     this.logger.debug(markdownText);
     // Convert Markdown to HTML
+<<<<<<< HEAD
     const html = await marked(markdownText);
+=======
+    const html = marked(markdownText);
+
+>>>>>>> bd4cba0ccafd0739654a322b4322a18859191b60
     this.logger.debug('Parsed HTML:', html);
     const outputDir = path.join(process.cwd(), 'output');
     const outputPath = path.join(outputDir, `${matchingFile}.html`);
 
     try {
       fs.mkdir(outputDir, { recursive: true });
+<<<<<<< HEAD
       fs.writeFile(outputPath, html, 'utf-8');
 
+=======
+      fs.writeFile(outputPath, html as string, 'utf-8');
+>>>>>>> bd4cba0ccafd0739654a322b4322a18859191b60
       this.logger.debug(`HTML saved to ${outputPath}`);
       return html;
     } catch (error) {
