@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import * as fs from 'fs/promises';
 import Typo = require('typo-js');
+import { marked } from 'marked';
+import path = require('path');
 
 @Injectable()
 export class FileUploadService {
@@ -50,6 +52,28 @@ export class FileUploadService {
     } catch (error) {
       this.logger.error('Error checking grammar', error);
       throw new BadRequestException('Error checking grammar');
+    }
+  }
+
+  parseMarkdown(markdownText: string, matchingFile: string) {
+    this.logger.debug('Parsing markdown text');
+
+    this.logger.debug(markdownText);
+    // Convert Markdown to HTML
+    const html = marked(markdownText);
+
+    this.logger.debug('Parsed HTML:', html);
+    const outputDir = path.join(process.cwd(), 'output');
+    const outputPath = path.join(outputDir, `${matchingFile}.html`);
+
+    try {
+      fs.mkdir(outputDir, { recursive: true });
+      fs.writeFile(outputPath, html as string, 'utf-8');
+      this.logger.debug(`HTML saved to ${outputPath}`);
+      return html;
+    } catch (error) {
+      this.logger.error('Error saving parsed HTML to file', error);
+      throw error;
     }
   }
 }
