@@ -2,9 +2,7 @@ import {
   Controller,
   Get,
   Post,
-  Patch,
   Param,
-  Delete,
   UseInterceptors,
   UploadedFile,
   BadRequestException,
@@ -14,15 +12,11 @@ import { FileUploadService } from './file-upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as path from 'path';
 import * as fs from 'fs/promises';
-import { MarkdownParserService } from '../markdown/markdown.service';
 
 @Controller('file-upload')
 export class FileUploadController {
   private readonly logger = new Logger(FileUploadController.name);
-  constructor(
-    private readonly fileUploadService: FileUploadService,
-    private readonly markdownParserService: MarkdownParserService,
-  ) {}
+  constructor(private readonly fileUploadService: FileUploadService) {}
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
@@ -75,7 +69,10 @@ export class FileUploadController {
       const markdownText = await fs.readFile(filePath, 'utf-8');
 
       // Use the Markdown parser service to parse the text
-      const parsedHtml = this.markdownParserService.parseMarkdown(markdownText);
+      const parsedHtml = this.fileUploadService.parseMarkdown(
+        markdownText,
+        matchingFile,
+      );
       return { message: 'Markdown parsed successfully', html: parsedHtml };
     } catch (error) {
       throw new BadRequestException('Error parsing markdown');
